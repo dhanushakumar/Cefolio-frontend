@@ -1,236 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+import logging
+import azure.functions as func
+import pandas as pd
+import json
+from azure.storage.blob import BlobServiceClient
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>Cefolio</title>
-    <meta name="title" content="Cefolio">
-    <meta name="description" content="A minimal SaaS based web application to create Online Portfolios for free">
-    <meta name="keywords" content="tiny, Web Based, client, Easy Access, cloud, minimal, superhuman">
-    <meta name="author" content="@Manoj">
-    <link href="images/titlelogo.png" rel="shortcut icon">
-    <link href="css/styles.css" rel="stylesheet">
-  </head>
+#load Josn Data File from storage Account Via giving container Name.
+constr ='DefaultEndpointsProtocol=https;AccountName=seq01655edcdev;AccountKey=B7bmFYbVDgs0Vspm8RmGVp7fjzjbMLp4BhgjP/EVSRuVuIxty3YsCgINy7PteZppR5DFcKbXCawQ7hxMa+y+XQ==;EndpointSuffix=core.windows.net'
+blob_service_client = BlobServiceClient.from_connection_string(constr)
+container_client = blob_service_client.get_container_client("edam-bizzdesign-poc")
+blob_client = container_client.get_blob_client("DataJsonEdamRectified.json")
+blob_client.download_blob().readall() # read blob content as string
 
-<body>
-  <div class="modal">
-  <button type="button" class="modal-close modal-toggle"><i class="icon" data-feather="x"></i><span class="hide-mobile">ESC</span></button>
-  <div class="modal-content">
-    <div class="success">
-      <a href="index.html"><img src="images/titlelogo.png" alt="logo" height = "300" width ="500"/></a>
-      <h2 class="modal-title first-name" id="title-name"></h2>
-      <p>You're on the list! We'll be in touch.</p>
-      <a href="index.html" class="button">Back home</a>
-    </div>
-    <div class="form-content">
-      <a href="index.html" class="logo"><img src="images/titlelogo.png" alt="logo"/></a>
-      <h2 class="modal-title" style = "font-family:Monument;">Join the Cefolio Waitlist</h2>
-      <p class="modal-subtitle">We're still in early stages, and we'll let you know once we're ready for more beta testers.</p>
-      <form class='form' name='doomoutForm' method='POST'><input type='hidden' name='form-name' value='doomoutForm' />
-        <div class="group">
-          <input type="text" id="firstName" name="first-name" placeholder="&nbsp;" autocomplete="off" required>
-          <label for="first-name">First name</label>
-          <span class="border"></span>
-        </div>
-        <div class="group">
-          <input type="email" name="email" placeholder="&nbsp;" autocomplete="off" required>
-          <label for="email">Email</label>
-          <span class="border"></span>
-        </div>
-        <button type="submit" class="button">Join the waitlist</button>
-      </form>
-    </div>
-  </div>
-</div>
-  <div class="content">
-    <a href="index.html"  class="logo"><img src="images/titlelogo.png" alt="logo"/></a>
-    <div class="hero">
-	  <h1 style ="text-align:center;color:#9370DB;font-family:monument;font-size:100px;">Cefolio</h1>
-	  <h3 style = "font-family:comic sans ms;"> We are a small start-up aiming at creating online portfolios for free to everyone. We provide you custom templates to<br>
-			create your own websites. We are looking to make this process more creative by letting you design your website. <br>
-			As of now, we do have ready templates for you. The best part of this is you dont get to pay for any of the service. </h3>
-      <h1 style = "font-family:Monument;">We explore and uncover</h1>
-      <h1 class="title shift clip">
-        <span class="word-shift">
-          <b class="is-visible" style = "font-family:Segoe Print;">enthusiasts&nbsp;</b>
-          <b style = "font-family:courier;">minimalists</b>
-          <b style = "font-family:Bookman;">indie developers</b>
-          <b style = "font-family:impact;">mindful people</b>
-          <b style = "font-family:comic sans ms;">designers</b>
-          <b style = "font-family:Ludicrous;">side project junkies</b>
-          <b style = "font-family:Skinny;">people who want less</b>
-        </span>
-      </h1>
-      <button class="button modal-toggle">Join the waitlist</button>
-      <p class="subtitle">Available soon on Web</p>
-    </div>
-    <div class="screen-wrapper">
-      <img src="images/Cefolio_1.png" class="screen" alt="screen"/>
-    </div>
-    <section class="section section-features">
-      <h2 class="title">Finding our ways to explore a person's skills in a effective manner</h1>
-      <div class="features">
-        <img src="images/overlay-left.svg" class="overlay-left hide-mobile" alt="overlay"/>
-        <img src="images/overlay-right.svg" class="overlay-right hide-mobile" alt="overlay"/>
-        <img src="images/overlay-top.svg" class="overlay-top show-mobile" alt="overlay"/>
-        <img src="images/overlay-bottom.svg" class="overlay-bottom show-mobile" alt="overlay"/>
-        <div class="row donts">
-          <div class="feature"><i class="icon" data-feather="x"></i> No integrations</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No interruptions</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No autoresponders</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No payment</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No rules</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No filters</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No A.I.</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No structure</div>
-          <!-- Repeat-->
-          <div class="feature"><i class="icon" data-feather="x"></i> No integrations</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No interruptions</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No autoresponders</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No payment</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No rules</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No filters</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No A.I.</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No structure</div>
-        </div>
-        <div class="row dos">
-          <div class="feature"><i class="icon" data-feather="check"></i>A Link to full Profile</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Unified place</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Dark mode</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Lightning fast</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Beautiful imagery</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Creative UI</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Interactive</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Free Templates</div>
-          <!-- Repeat-->
-          <div class="feature"><i class="icon" data-feather="check"></i>A Link to full Profile</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Unified place</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Dark mode</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Lightning fast</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Beautiful imagery</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Creative UI</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Interactive</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Free Templates</div>
-        </div>
-      </div>
-      <!-- <p>If you’re looking for an email client with more features, try <a href="">these</a>.</p> -->
-    </section>
-    <section class="section section-providers">
-      <h2 class="title">Use and integrate with any and all of external accounts</h2>
-      <div>
-        <div class="zero-slider">
-          <div class="slide"><img src="images/icons8-github.svg" alt="Github"/></div>
-          <div class="slide"><img src="images/icons8-linkedin-100.png" alt="Linkedin"/></div>
-          <div class="slide"><img src="images/icons8-instagram-100.png" alt="Instagram"/></div>
-		  <div class="slide"><img src="images/icons8-level-up-your-coding-skills-and-quickly-land-a-job-100.png" alt="LeetCode"/></div>
-		  <div class="slide"><img src="images/icons8-codechef-100.png" alt="Instagram"/></div>
-		  </div>
-      </div>
-    </section>
-    <section class="section imagery">
-      <h2 style="font-family:monument;">Celebrate Portfolio Websites with Zero cost and with beautiful imagery templates</h2>
-      <img src="images/overlay-bottom.svg" class="overlay-bottom hide-mobile" alt="overlay"/>
-      <div class="zero-slider">
-        <div class="slide"><img src="images/screen-illo-1.png" alt="inboxzero"/></div>
-        <div class="slide"><img src="images/screen-illo-2.png" alt="inboxzero"/></div>
-        <div class="slide"><img src="images/screen-illo-3.png" alt="inboxzero"/></div>
-        <div class="slide"><img src="images/screen-illo-4.png" alt="inboxzero"/></div>
-        <div class="slide"><img src="images/screen-illo-5.png" alt="inboxzero"/></div>
-        <div class="slide"><img src="images/screen-illo-6.png" alt="inboxzero"/></div>
-      </div>
-    </section>
-    <section class="section cta">
-      <div class="cta-content">
-        <h1 class="title">Join the beta, and start loving Portfolios</h1>
-        <button class="button white modal-toggle">Join the waitlist</button>
-        <p class="subtitle">Will be coming up Soon</p>
-      </div>
-    </section>
-    <footer class="footer">
-      <p>&copy; Cefolio</p>
-    </footer>
-    </div>
-  </div>
-  <script src="./js/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/scripts.min.js"></script>
-<script>
+#Read the Blob downloaded
+f = blob_client.download_blob().readall()
+data = json.loads(f)
 
-  // Close modal on escape key
-  $(document).keyup(function(e) {
-    if (e.key === "Escape") {
-      $('.modal').removeClass('modal-show');
-      $('.content').removeClass('content-blurred');
-      $('body').removeClass('no-scroll');
-    }
-  });
+#Reading for all objects in the Data Variable
+for i in range(0,len(data)):
+  df = pd.DataFrame(data[i])
+  normalized1Data = pd.json_normalize(json.loads(df.to_json(orient = 'records')),sep = '_')
+  #Not all objects of Data variable have the column Items_documents as the last offset response is Null on items
+  if("items_documents" in normalized1Data.columns.values.tolist()):
+    normalized1Data = normalized1Data.explode("items_documents")
+    #Unwrapping all the nested Json to level 2
+    normalized1Data = pd.json_normalize(json.loads(normalized1Data.to_json(orient = 'records')),max_level=2,sep="_")
+    #Exploding all the array columns to populate distinct records
+    normalized1Data = normalized1Data.explode('items_documents_values_collibra_mastered')
+    normalized1Data = normalized1Data.explode('items_documents_values_collibra_origin')
+    normalized1Data = normalized1Data.explode('items_documents_values_collibra_provider')
+    normalized1Data = normalized1Data.explode('items_documents_values_collibra_secondary')
+  #Placing and append the final df to store all the above processed Data.
+  if(i==0):
+    FinalDf = normalized1Data
+  else:
+    FinalDf = FinalDf.append(normalized1Data, ignore_index = True)
 
-  $(function(){
-
-    // Provider card slider
-    $('.slider').flickity({
-      pauseAutoPlayOnHover: false,
-      prevNextButtons: false,
-      cellAlign: 'center',
-      draggable:  false,
-      freeScroll: false,
-      wrapAround: true,
-      pageDots: false,
-      autoPlay: 3000,
-    });
-
-    // Imbox zero slider
-    $('.zero-slider').flickity({
-      pauseAutoPlayOnHover: false,
-      prevNextButtons: false,
-      cellAlign: 'center',
-      freeScroll: false,
-      wrapAround: false,
-      draggable: false,
-      pageDots: false,
-      autoPlay: 3000,
-      fade: true,
-    });
-
-    // Open & close modal
-    $('.modal-toggle').click(function(){
-      $('.modal').toggleClass('modal-show');
-      $('.content').toggleClass('content-blurred');
-      $('body').toggleClass('no-scroll');
-    });
-
-    // Reserve username form
-    $(".form").submit(function(e) {
-      e.preventDefault();
-      var $form = $(this);
-      $.post($form.attr("action"), $form.serialize()).then(function() {
-        $('.form-content').addClass('form-content-hide');
-        $('.success').addClass('success-show');
-      });
-    });
-
-    // Save user's first name
-    $(".form").submit(function(e) {
-      e.preventDefault();
-      var value = $("#firstName").val();
-      $('.first-name').text("Thank you," + " " + value + "!");
-    });
-
-    // Feather icons
-    feather.replace()
-
-    // ScrollReveal
-    ScrollReveal().reveal('.hero, .title, .screen, .features, .cards, .zero-slider', {
-      distance: '40px',
-      duration: 2000,
-      mobile: false,
-      reset: false,
-      opacity: 0
-    });
-
-  });
-</script>
-
-</body>
-
-</html>
+#Uploading the above Df to conatiner which was mentioned above.
+container_client.upload_blob(name='EDaMFlattened.parquet', data=FinalDf.to_parquet())
